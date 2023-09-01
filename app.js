@@ -1,56 +1,142 @@
-//calculator functions
-function add(a, b) {
-    const result = a + b;
-    return roundIfLong(result);
-}
-function subtract(a, b) {
-    const result = a - b;
-    return roundIfLong(result);
-}
-function multiply(a, b) {
-    const result = a * b;
-    return roundIfLong(result);
-}
-function divide(a, b) {
-    if (b === 0)
-        return "Cannot divide by zero"
-    result = a / b;
-    return roundIfLong(result);
-}
-
-function power(a, b) {
-    const result = a ** b;
-    return roundIfLong(result);
-}
-
-function roundIfLong(result) {
-    let stringNumber = result.toString();
-    if (stringNumber.includes('.')) {
-        const decimalPartLength = stringNumber.split('.')[1].length;
-        if (decimalPartLength > 4)
-            return parseFloat(result.toFixed(4));
+class Calculator {
+    constructor(previousInputElement, currentInputElement) {
+        this.previousInputElement = previousInputElement;
+        this.currentInputElement = currentInputElement;
+        this.clear();
     }
-    return result;
-}
+    clear() {
+        this.currentOperand = "";
+        this.previousOperand = "";
+        this.operator = undefined;
+    }
 
-function operate(firstNum, operator, secondNum) {
-    switch (operator) {
-        case "add":
-            return add(firstNum, secondNum);
-        case "subtract":
-            return subtract(firstNum, secondNum);
-        case "divide":
-            return divide(firstNum, secondNum);
-        case "multiply":
-            return multiply(firstNum, secondNum);
-        case "power":
-            return power(firstNum, secondNum);
+    deleteAction() {
+
+    }
+
+    addOperator(operator) {
+        if (this.currentOperand === "" || this.previousOperand !== "") return
+        switch (operator) {
+            case "power":
+                this.operator = "^";
+            case "add":
+                this.operator = "+";
+            case "multiply":
+                this.operator = "*";
+            case "subtract":
+                this.operator = "-";
+            case "divide":
+                this.operator = "÷";
+
+        }
+        this.previousOperand = this.currentOperand;
+        this.currentOperand = "";
+
+    }
+
+    appendNum(num) {
+        if (num === '.' && this.currentOperand.includes('.')) return; //avoid multiple decimals
+        this.currentOperand = this.currentOperand.toString() + num.toString();
+    }
+
+    getDisplay() {
+        this.currentInputElement.innerText = this.getNumberDisplay(this.currentOperand);
+        if (this.operator)
+            this.previousInputElement.innerText = `${this.previousOperand} ${this.operator}`
+
+    }
+
+    getNumberDisplay(num) {
+        const stringNum = num.toString();
+        const beforeDecimal = parseFloat(stringNum.split('.')[0]);
+        const afterDecimal = stringNum.split('.')[1];
+        let numberDisplay;
+        if (isNaN(beforeDecimal))
+            numberDisplay = "";
+        else
+            numberDisplay = beforeDecimal.toLocaleString('en', { maximumFractionDigits: 0 });
+        if (afterDecimal)
+            return `${numberDisplay}.${afterDecimal}`
+        else
+            return numberDisplay;
+    }
+
+    add(a, b) {
+        const result = a + b;
+        return roundIfLong(result);
+    }
+    subtract(a, b) {
+        const result = a - b;
+        return roundIfLong(result);
+    }
+    multiply(a, b) {
+        const result = a * b;
+        return roundIfLong(result);
+    }
+    divide(a, b) {
+        if (b === 0)
+            return "Cannot divide by zero"
+        result = a / b;
+        return roundIfLong(result);
+    }
+
+    power(a, b) {
+        const result = a ** b;
+        return roundIfLong(result);
+    }
+
+    roundIfLong(result) {
+        let stringNumber = result.toString();
+        if (stringNumber.includes('.')) {
+            const decimalPartLength = stringNumber.split('.')[1].length;
+            if (decimalPartLength > 4)
+                return parseFloat(result.toFixed(4));
+        }
+        return result;
+    }
+
+
+    operate(firstNum, operator, secondNum) {
+        switch (operator) {
+            case "add":
+                return add(firstNum, secondNum);
+            case "subtract":
+                return subtract(firstNum, secondNum);
+            case "divide":
+                return divide(firstNum, secondNum);
+            case "multiply":
+                return multiply(firstNum, secondNum);
+            case "power":
+                return power(firstNum, secondNum);
+        }
     }
 }
+
+
 
 
 //variables
-let firstNum = "";
-let secondNum = "";
-let operator = "";
 
+const numberButtons = document.querySelectorAll('[data-number]');
+const operatorButtons = document.querySelectorAll('[data-operator]');
+const equalsButton = document.querySelector('[data-equals]');
+const previousInputElement = document.querySelector('[data-previous-input]');
+const currentInputElement = document.querySelector('[data-current-input]');
+const clearButton = document.querySelector('[data-clear]');
+const deleteButton = document.querySelector('[data-delete]');
+
+const calculator = new Calculator(previousInputElement, currentInputElement);
+//click events
+numberButtons.forEach((button => {
+    button.addEventListener('click', () => {
+        calculator.appendNum(button.innerText);
+        calculator.getDisplay();
+    })
+}))
+
+operatorButtons.forEach((button => {
+    button.addEventListener('click', () => {
+        calculator.addOperator(button.id);
+        calculator.getDisplay();
+    })
+}))
