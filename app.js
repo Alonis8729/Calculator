@@ -15,19 +15,23 @@ class Calculator {
     }
 
     addOperator(operator) {
-        if (this.currentOperand === "" || this.previousOperand !== "") return
+        if (this.currentOperand === "") return;
         switch (operator) {
             case "power":
                 this.operator = "^";
+                break;
             case "add":
                 this.operator = "+";
+                break; 
             case "multiply":
                 this.operator = "*";
+                break; 
             case "subtract":
                 this.operator = "-";
+                break; 
             case "divide":
                 this.operator = "÷";
-
+                break; 
         }
         this.previousOperand = this.currentOperand;
         this.currentOperand = "";
@@ -55,7 +59,7 @@ class Calculator {
             numberDisplay = "";
         else
             numberDisplay = beforeDecimal.toLocaleString('en', { maximumFractionDigits: 0 });
-        if (afterDecimal)
+        if (afterDecimal != null)
             return `${numberDisplay}.${afterDecimal}`
         else
             return numberDisplay;
@@ -116,7 +120,6 @@ class Calculator {
 
 
 //variables
-
 const numberButtons = document.querySelectorAll('[data-number]');
 const operatorButtons = document.querySelectorAll('[data-operator]');
 const equalsButton = document.querySelector('[data-equals]');
