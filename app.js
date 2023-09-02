@@ -8,6 +8,7 @@ class Calculator {
         this.currentOperand = "";
         this.previousOperand = "";
         this.operator = undefined;
+
     }
 
     delete() {
@@ -16,22 +17,23 @@ class Calculator {
 
     addOperator(operator) {
         if (this.currentOperand === "") return;
+        if (this.previousOperand !== "") this.operate();
         switch (operator) {
             case "power":
                 this.operator = "^";
                 break;
             case "add":
                 this.operator = "+";
-                break; 
+                break;
             case "multiply":
-                this.operator = "*";
-                break; 
+                this.operator = "×";
+                break;
             case "subtract":
                 this.operator = "-";
-                break; 
+                break;
             case "divide":
                 this.operator = "÷";
-                break; 
+                break;
         }
         this.previousOperand = this.currentOperand;
         this.currentOperand = "";
@@ -47,7 +49,8 @@ class Calculator {
         if (this.operator != null)
             this.previousInputElement.innerText = `${this.getNumberDisplay(this.previousOperand)} ${this.operator}`;
         else
-            this.previousInputElement.innerText = '';
+            this.previousInputElement.innerText = "";
+
     }
 
     getNumberDisplay(num) {
@@ -65,28 +68,31 @@ class Calculator {
             return numberDisplay;
     }
 
+    //arithmetic calculations functions
     add(a, b) {
         const result = a + b;
-        return roundIfLong(result);
+        return this.roundIfLong(result);
     }
     subtract(a, b) {
         const result = a - b;
-        return roundIfLong(result);
+        return this.roundIfLong(result);
     }
     multiply(a, b) {
         const result = a * b;
-        return roundIfLong(result);
+        return this.roundIfLong(result);
     }
     divide(a, b) {
-        if (b === 0)
-            return "Cannot divide by zero"
-        result = a / b;
-        return roundIfLong(result);
+        if (b === 0) {
+            alert("Cannot divide by zero")
+            return
+        }
+        const result = a / b;
+        return this.roundIfLong(result);
     }
 
     power(a, b) {
         const result = a ** b;
-        return roundIfLong(result);
+        return this.roundIfLong(result);
     }
 
     roundIfLong(result) {
@@ -100,19 +106,31 @@ class Calculator {
     }
 
 
-    operate(firstNum, operator, secondNum) {
-        switch (operator) {
-            case "add":
-                return add(firstNum, secondNum);
-            case "subtract":
-                return subtract(firstNum, secondNum);
-            case "divide":
-                return divide(firstNum, secondNum);
-            case "multiply":
-                return multiply(firstNum, secondNum);
-            case "power":
-                return power(firstNum, secondNum);
+    operate() {
+        let result;
+        let prevNum = parseFloat(this.previousOperand);
+        let currNum = parseFloat(this.currentOperand);
+        switch (this.operator) {
+            case "+":
+                result = this.add(prevNum, currNum);
+                break;
+            case "-":
+                result = this.subtract(prevNum, currNum);
+                break;
+            case "÷":
+                result = this.divide(prevNum, currNum);
+                break;
+            case "×":
+                result = this.multiply(prevNum, currNum);
+                break;
+            case "^":
+                result = this.power(prevNum, currNum);
+                break;
         }
+
+        this.previousOperand = "";
+        this.currentOperand = result;
+        this.operator = undefined;
     }
 }
 
@@ -122,7 +140,7 @@ class Calculator {
 //variables
 const numberButtons = document.querySelectorAll('[data-number]');
 const operatorButtons = document.querySelectorAll('[data-operator]');
-const equalsButton = document.querySelector('[data-equals]');
+const equalsButton = document.getElementById('equals');
 const previousInputElement = document.querySelector('[data-previous-input]');
 const currentInputElement = document.querySelector('[data-current-input]');
 const clearButton = document.getElementById('clear');
@@ -155,3 +173,9 @@ clearButton.addEventListener('click', () => {
     calculator.getDisplay()
 })
 
+equalsButton.addEventListener('click', () => {
+    calculator.operate()
+    calculator.getDisplay();
+})
+
+//keyboard support
