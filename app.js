@@ -179,3 +179,45 @@ equalsButton.addEventListener('click', () => {
 })
 
 //keyboard support
+
+// Listen for keydown events on the document
+document.addEventListener('keydown', (event) => {
+    // Get the key that was pressed
+    const key = event.key;
+
+    // Define a mapping of keys to calculator button IDs
+    const keyMap = {
+        '0': 'number-0',
+        '1': 'number-1',
+        '2': 'number-2',
+        '3': 'number-3',
+        '4': 'number-4',
+        '5': 'number-5',
+        '6': 'number-6',
+        '7': 'number-7',
+        '8': 'number-8',
+        '9': 'number-9',
+        '+': 'add',
+        '-': 'subtract',
+        '*': 'multiply',
+        '/': 'divide',
+        '^': 'power',
+        '=': 'equals', 
+        '.': 'decimal',
+        'Enter': 'equals', 
+        'Backspace': 'del', 
+        'Delete': 'del', 
+        'Escape': 'clear' 
+    };
+
+    // Check if the key is in the keyMap
+    if (keyMap[key]) {
+        // Find the button element with the corresponding ID
+        const button = document.getElementById(keyMap[key]);
+
+        // If the button exists, trigger a click event on it
+        if (button) {
+            button.click();
+        }
+    }
+});
