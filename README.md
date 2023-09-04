@@ -9,3 +9,4 @@ What I have learned:
 What should I improve:
 - Commit more often with focusing on clear and summarized commits
 - Code readability and organization
+- Lack of css variables usage
