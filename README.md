@@ -1,4 +1,6 @@
 # Calculator
+![image](https://github.com/Alonso8729/Calculator/assets/119747342/e290eb12-1dfc-464d-bdde-aeb56e736594)
+
 In this project I created a calculator using HTML, CSS and Vanilla JS.
 
 What I have learned:
