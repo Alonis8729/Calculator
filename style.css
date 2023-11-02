@@ -13,21 +13,12 @@
 
 body {
     background-color: rgba(11, 135, 169, 0.9);
-    /*min-height: 100vh;*/
 }
 
 main {
-    /*max-width: 480px;
-    margin: auto;*/
+  
     margin-top: 80px;
-    /*max-height: 780px;
-    position: relative;
-    margin: auto;
-    margin-top: 30px;
-    background-color: black;
-    padding: 10px 20px;
-    box-shadow: 5px 5px 10px black;
-    width: clamp(320px, 450px, 60rem);*/
+   
 }
 
 .calculator-container{
@@ -37,10 +28,10 @@ main {
     justify-content: center;
     max-width: 480px; 
     margin: auto; 
+    border-radius: 7px;
 }
 .calculator-grid {
     display: grid;
-    max-width: 500px;
     padding-bottom: 3em;
     margin: auto;
     justify-content: center;
@@ -133,22 +124,63 @@ footer p {
 
 
 @media screen and (max-width:500px) {
-  /*  .calculator-grid {
-        grid-template-columns: repeat(4, 50px);
-        grid-template-rows: minmax(120px, auto)repeat(5, 50px);
-        padding-bottom: 300px;
-    }
-    .calculator-grid>button {
+    .calculator-grid {
+        display: grid;
+        padding-bottom: 3em;
+        margin: auto;
+        justify-content: center;
+        align-content: center;
+        grid-template-columns: repeat(4, 70px);
+        grid-template-rows: minmax(70px, auto)repeat(5, 70px);
+        outline: none;
     
-        font-size: 1.5rem;
     }
-    main {
-        max-width: 250px;
-        padding-top: 50px;
+
+    .calculator-container{
+        max-width: 350px;
+        padding-top: 100px;
+        margin-bottom: 6rem;
+    }
+
+    button {
+        font-size: 1.2rem !important;
+    }
+
+    footer {
+        padding: 15px;
+    }
+}
+
+@media screen and (max-width:350px) {
+    .calculator-grid {
+        display: grid;
+        margin: auto;
+        justify-content: center;
+        align-content: center;
+        grid-template-columns: repeat(4, 65px);
+        grid-template-rows: minmax(65px, auto)repeat(5, 65px);
+        outline: none;
+    
+    }
+
+    .calculator-container{
+        margin-top: 50px;
+        max-width: 320px;
+        padding-top: 80px;
         
     }
-    .calculator-container{
-        height: 60vh;
+
+    button {
+        font-size: 1.1rem !important;
     }
-    */
+    
+    main{
+        min-height: 100vh;
+        
+    }
+
+    footer {
+        padding: 30px;
+    }
+
 }
