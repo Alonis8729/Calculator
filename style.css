@@ -21,6 +21,10 @@ main {
    
 }
 
+button {
+    font-weight: 600;
+}
+
 .calculator-container{
     padding-top: 3.5rem;
     background-color: black;
