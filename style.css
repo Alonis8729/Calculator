@@ -126,6 +126,13 @@ footer p {
     color: var(--transparent);
 }
 
+footer p a {
+    color: white;
+    
+    text-decoration: none;
+    
+}
+
 
 @media screen and (max-width:500px) {
     .calculator-grid {
